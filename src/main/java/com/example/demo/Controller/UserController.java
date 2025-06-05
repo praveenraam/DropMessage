@@ -20,8 +20,8 @@ public class UserController {
 
     @PostMapping("/register")
     public Response registerUser(@RequestBody User user){
-        boolean result = userService.registerUser(user);
-        if(result){
+        boolean isUserCreated = userService.registerUser(user);
+        if(isUserCreated){
             return new Response(HttpStatus.ACCEPTED,"Account created Successfully");
         }
         return new Response(HttpStatus.NOT_ACCEPTABLE,"Account not created");
@@ -31,14 +31,12 @@ public class UserController {
 
     @GetMapping("/user/{username}")
     public Response allUserMessage(@PathVariable String username){
-        if(userService.isUserExists(username)) return new MessageResponse(HttpStatus.NOT_FOUND,"User not found",null);
+        if(!userService.isUserExists(username)) return new MessageResponse(HttpStatus.NOT_FOUND,"User not found",null);
 
         List<Message> listOfMessage = userService.getAllUserMessage(username);
         if(listOfMessage.isEmpty()) return new MessageResponse(HttpStatus.OK,"No messages",listOfMessage);
 
         return new MessageResponse(HttpStatus.OK,"Messages were fetched",listOfMessage);
     }
-
-
 
 }

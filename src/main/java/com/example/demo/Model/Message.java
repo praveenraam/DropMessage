@@ -17,7 +17,7 @@ public class Message {
     @Column(nullable = false)
     private String title;
 
-    @Column(nullable = false, columnDefinition = "TEXT")
+    @Column(nullable = false)
     private String content;
 
     private LocalDate expiration;
@@ -29,4 +29,59 @@ public class Message {
     @Column
     private String password;
 
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
+
+    public User getUser() {
+        return user;
+    }
+
+    public void setUser(User user) {
+        this.user = user;
+    }
+
+    public String getTitle() {
+        return title;
+    }
+
+    public void setTitle(String title) {
+        this.title = title;
+    }
+
+    public String getContent() {
+        return content;
+    }
+
+    public void setContent(String content) {
+        this.content = content;
+    }
+
+    public LocalDate getExpiration() {
+        return expiration;
+    }
+
+    public void setExpiration(LocalDate expiration) {
+        this.expiration = expiration;
+    }
+
+    public EncryptionType getEncryption() {
+        return encryption;
+    }
+
+    public void setEncryption(EncryptionType encryption) {
+        this.encryption = encryption;
+    }
+
+    public String getPassword() {
+        return password;
+    }
+
+    public void setPassword(String password) {
+        this.password = password;
+    }
 }
