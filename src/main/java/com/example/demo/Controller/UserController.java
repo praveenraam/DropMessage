@@ -29,7 +29,7 @@ public class UserController {
 
 //    @PostMapping("/login")
 
-    @GetMapping("/user/{username}")
+    @GetMapping("/u/{username}")
     public Response UsersAllMessage(@PathVariable String username){
         if(!userService.isUserExists(username)) return new MessageResponse(HttpStatus.NOT_FOUND, "User not found", new ArrayList<>());
 

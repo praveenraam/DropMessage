@@ -36,4 +36,18 @@ public class MessageController {
         return new MessageResponse(HttpStatus.OK,"Message fetched successfully",message);
     }
 
+    @DeleteMapping("/message/delete/{id}")
+    public Response deleteMessage(@PathVariable Long id) {
+        Message message = messageService.getMessageById(id);
+
+        System.out.println(message.getId());
+
+        if (message == null) {
+            return new Response(HttpStatus.NOT_FOUND, "Message not found");
+        }
+
+        messageService.deleteMessage(id);
+        return new Response(HttpStatus.OK, "Message deleted successfully");
+    }
+
 }
