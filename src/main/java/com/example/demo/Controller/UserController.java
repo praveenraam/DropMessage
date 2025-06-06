@@ -30,8 +30,8 @@ public class UserController {
 //    @PostMapping("/login")
 
     @GetMapping("/user/{username}")
-    public Response allUserMessage(@PathVariable String username){
-        if(!userService.isUserExists(username)) return new MessageResponse(HttpStatus.NOT_FOUND,"User not found",null);
+    public Response UsersAllMessage(@PathVariable String username){
+        if(!userService.isUserExists(username)) return new MessageResponse(HttpStatus.NOT_FOUND, "User not found", new ArrayList<>());
 
         List<Message> listOfMessage = userService.getAllUserMessage(username);
         if(listOfMessage.isEmpty()) return new MessageResponse(HttpStatus.OK,"No messages",listOfMessage);

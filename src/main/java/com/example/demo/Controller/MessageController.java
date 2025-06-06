@@ -6,10 +6,9 @@ import com.example.demo.Response.Response;
 import com.example.demo.Service.MessageService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
+
+import java.time.LocalDate;
 
 @RestController
 public class MessageController {
@@ -23,6 +22,18 @@ public class MessageController {
 
         if(isMessageCreated) return new Response(HttpStatus.ACCEPTED,"Message created successfully");
         return new Response(HttpStatus.NOT_ACCEPTABLE,"Message not created");
+    }
+
+    @GetMapping("/message/{slug}")
+    public MessageResponse getMessage(@PathVariable String slug){
+        Message message = messageService.getMessage(slug);
+
+        if (message.getExpiration() != null && message.getExpiration().isBefore(LocalDate.now())) {
+            return new MessageResponse(HttpStatus.GONE, "Message expired", (Message) null);
+        }
+
+        if(message == null) new MessageResponse(HttpStatus.NOT_FOUND,"Message not found",message);
+        return new MessageResponse(HttpStatus.OK,"Message fetched successfully",message);
     }
 
 }
