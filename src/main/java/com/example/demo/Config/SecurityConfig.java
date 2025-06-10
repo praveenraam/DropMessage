@@ -37,10 +37,7 @@ public class SecurityConfig {
         http.cors(Customizer.withDefaults());
 //      Asking for Authorization on all the request, if any exceptions include it
         http.authorizeHttpRequests(request -> request
-                .requestMatchers("/register", "/login").permitAll() // No auth needed
-//                .requestMatchers("/customer").hasRole("CUSTOMER")
-//                .requestMatchers("/seller").hasRole("SELLER")
-//                .requestMatchers("/admin").hasRole("ADMIN")
+                .requestMatchers("/register", "/login","/u/{username}","/message/{slug}").permitAll() // No auth needed
                 .anyRequest().authenticated() // Everything else needs authentication
         );
 
