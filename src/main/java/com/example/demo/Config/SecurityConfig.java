@@ -14,6 +14,8 @@ import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
+import org.springframework.web.servlet.config.annotation.CorsRegistry;
+import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
 @Configuration
 @EnableWebSecurity // Saying server to ignore built in filter chains and access our own security chain
@@ -32,7 +34,7 @@ public class SecurityConfig {
 
 //      Disabling the csrf token
         http.csrf(customizer -> customizer.disable());
-
+        http.cors(Customizer.withDefaults());
 //      Asking for Authorization on all the request, if any exceptions include it
         http.authorizeHttpRequests(request -> request
                 .requestMatchers("/register", "/login").permitAll() // No auth needed
@@ -68,6 +70,18 @@ public class SecurityConfig {
         return configuration.getAuthenticationManager();
     }
 
-
+    @Bean
+    public WebMvcConfigurer corsConfigurer() {
+        return new WebMvcConfigurer() {
+            @Override
+            public void addCorsMappings(CorsRegistry registry) {
+                registry.addMapping("/**")
+                        .allowedOrigins("http://localhost:5173")
+                        .allowedMethods("GET", "POST", "PUT", "DELETE", "OPTIONS")
+                        .allowedHeaders("*")
+                        .allowCredentials(true);
+            }
+        };
+    }
 }
 

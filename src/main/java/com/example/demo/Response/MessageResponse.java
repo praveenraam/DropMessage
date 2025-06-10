@@ -9,7 +9,12 @@ public class MessageResponse extends Response{
 
     private List<Message> messageList;
     private Message messageObj;
+    private String slug;
 
+    public MessageResponse(HttpStatus status,String message, String slug){
+        super(status,message);
+        this.slug = slug;
+    }
 
     public MessageResponse(HttpStatus status, String message, List<Message> messageList) {
         super(status, message);
@@ -35,5 +40,13 @@ public class MessageResponse extends Response{
 
     public void setMessageObj(Message messageObj) {
         this.messageObj = messageObj;
+    }
+
+    public String getSlug() {
+        return slug;
+    }
+
+    public void setSlug(String slug) {
+        this.slug = slug;
     }
 }

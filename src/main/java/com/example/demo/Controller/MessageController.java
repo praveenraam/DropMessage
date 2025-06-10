@@ -17,11 +17,14 @@ public class MessageController {
     private MessageService messageService;
 
     @PostMapping("/create")
-    public Response createMessage(@RequestBody Message message){
+    public MessageResponse createMessage(@RequestBody Message message){
         boolean isMessageCreated = messageService.createMessage(message);
 
-        if(isMessageCreated) return new Response(HttpStatus.ACCEPTED,"Message created successfully");
-        return new Response(HttpStatus.NOT_ACCEPTABLE,"Message not created");
+        if(isMessageCreated) {
+            Message messageFromDb = messageService.getMessageById(message.getId());
+            return new MessageResponse(HttpStatus.ACCEPTED,"Message created successfully",messageFromDb.getSlug());
+        }
+        return new MessageResponse(HttpStatus.NOT_ACCEPTABLE,"Message not created","");
     }
 
     @GetMapping("/message/{slug}")

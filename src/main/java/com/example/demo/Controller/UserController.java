@@ -13,8 +13,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.ArrayList;
 import java.util.List;
 
-@CrossOrigin(origins = "http://localhost:5173")
-
+@CrossOrigin
 @RestController
 public class UserController {
 
@@ -48,6 +47,11 @@ public class UserController {
         if(listOfMessage.isEmpty()) return new MessageResponse(HttpStatus.OK,"No messages",listOfMessage);
 
         return new MessageResponse(HttpStatus.OK,"Messages were fetched",listOfMessage);
+    }
+
+    @GetMapping("/api/isValidJWT")
+    public Response isJWTValid(){
+        return new Response (HttpStatus.OK,"isValid");
     }
 
 }
